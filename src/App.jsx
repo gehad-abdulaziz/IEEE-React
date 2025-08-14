@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import './App.css'
+import { useState, useEffect } from 'react';
+import './App.css';
 
 import img1 from './assets/download (9).jpeg';
 import img2 from './assets/download (10).jpeg';
@@ -9,16 +9,39 @@ import img5 from './assets/download (13).jpeg';
 import img6 from './assets/flowers background Flowers, Pretty flowers.jpeg';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [greeting, setGreeting] = useState("");
+
+  useEffect(() => {
+    const now = new Date();
+    const hours = now.getHours();
+
+    if (hours < 12) {
+      setGreeting("Good Morning!");
+    } else {
+      setGreeting("Good Evening!");
+    }
+
+    const timer = setTimeout(() => setGreeting(""), 3000); // تختفي بعد 3 ثواني
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <>
+      {/* Greeting popup */}
+      {greeting && (
+        <div className="fixed top-4 left-1/2 -translate-x-1/2 bg-amber-500 text-white font-bold px-6 py-3 rounded shadow-lg z-50">
+          {greeting}
+        </div>
+      )}
+
       <div className="">
         <div className="max-w-7xl mx-auto p-6">
-          <h2 className="text-4xl font-extrabold  text-center text-white">Nature Gallery</h2>
-<h6 className="text-xl italic font-extrabold text-white text-center drop-shadow-md mb-6">
-  flip and get your Quat
-</h6>
+          <h2 className="text-4xl font-extrabold text-center text-white">Nature Gallery</h2>
+          <h6 className="text-xl italic font-extrabold text-white text-center drop-shadow-md mb-6">
+            flip and get your Quat
+          </h6>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-20 justify-items-center">
 
             <div className="group perspective w-[400px]">
@@ -112,4 +135,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
